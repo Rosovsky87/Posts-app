@@ -1,46 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import PostsList from '../posts-list/posts-list';
 import SearchPanel from '../search-panel/search-panel';
+import fetchData from '../../data/data';
 
 
-function App() {
 
-	const [users, setUsers] = useState([]);
+const App = () => {
+
+	const [usersMap, setUsers] = useState([]);
 	const [posts, setPosts] = useState([]);
 	const [searchLine, setSearchLine] = useState('');
 
 	useEffect(() => {
-		const allUsers = () => {
-			fetch('https://jsonplaceholder.typicode.com/users')
-				.then(res => res.json())
-				.then(data => setUsers(data));
-		}
-		allUsers()
+		fetchData('users').then(usersArray => {
+			const usersMap = new Map();
+			for (const user of usersArray) {
+				usersMap.set(user.id, user);
+			}
+			return usersMap;
+		}).then(setUsers);
 
-		const allPosts = () => {
-			fetch('https://jsonplaceholder.typicode.com/posts')
-				.then(res => res.json())
-				.then(data => setPosts(data));
-		}
-		allPosts()
-	}, [])
+		fetchData('posts').then(setPosts);
+	}, []);
 
-	const onUpdateSearchNew = (newSearchLine) => {
-		setSearchLine(newSearchLine)
-	}
+	const filteredPosts = posts ?
+		posts.filter(({ body }) => body.match(searchLine)) :
+		null;
 
 	return (
 		<>
 			<SearchPanel
-				onUpdateSearchNew={(newSearchLine) => onUpdateSearchNew(newSearchLine)}
+				onUpdateSearchNew={setSearchLine}
 			/>
 			<PostsList
-				users={users}
-				posts={posts}
-				searchLine={searchLine}
+				usersMap={usersMap}
+				posts={filteredPosts}
 			/>
 		</>
-	)
+	);
 }
 
 export default App;

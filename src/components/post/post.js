@@ -29,13 +29,14 @@ background-color: SkyBlue;
 `;
 
 
-const Post = ({ el }) => {
+const Post = ({ post, user }) => {
 
-	const { author, title, body, id } = el;
+	const { title, body, id } = post;
+	const { name, username } = user;
 
 	return (
 		<Wrapper>
-			<Author>сообщение № {id} от {author}</Author>
+			<Author>сообщение № {id} от {`${name} (${username})`}</Author>
 			<Title>{title}</Title>
 			<Body>{body}</Body>
 		</Wrapper>

@@ -12,28 +12,28 @@ border-radius:7px;
 `;
 
 
-const PostsList = ({ users, posts, searchLine }) => {
+const PostsList = ({ usersMap, posts }) => {
 
-	for (let i = 0; i < users.length; i++) {
-		posts.reduce((prev, el) => {
-			if (el.userId === users[i].id) {
-				return el.author = `${users[i].name} (${users[i].username})`
-			}
-			return null
-		}, [-1])
+	if (!usersMap || !posts) {
+		return (
+			<ListBlock>
+				<Spinner />
+			</ListBlock>
+		);
 	}
 
-	const view = users && posts
-		? posts.filter(item => item.body.indexOf(searchLine) > -1).map(el => <Post key={el.id} el={el} />)
-		: <Spinner />
-
 	return (
-		<>
-			<ListBlock>
-				{view}
-			</ListBlock>
-		</>
+		<ListBlock>
+			{
+				posts.map(post => {
+					return (
+						<Post key={post.id} post={post} user={usersMap.get(post.userId)} />
+					)
+				})
+			}
+		</ListBlock>
 	)
 }
+
 
 export default PostsList;

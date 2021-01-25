@@ -1,30 +1,28 @@
 import React from 'react';
-import './spinner.css';
+import styled from 'styled-components';
+
+
+const Spin = styled.div`
+
+@keyframes blinking {
+	0% { opacity: 1 }
+	100% { opacity: 0 }
+ }
+ {
+	width: 100px;
+	height: 100px;
+	background-color: black;
+	margin: auto;
+	top: 150px;
+	position: relative;
+	animation: blinking linear 1s infinite;
+ };
+`;
 
 const Spinner = () => {
 	return (
-		< div class="loadingio-spinner-spinner-djlifvpjliu" >
-			<div class="ldio-dulajag289u">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-			</div></div >
+		<Spin />
 	)
 }
 
 export default Spinner
-
-
-
-
-
-		// <style type="text/css"></style>
