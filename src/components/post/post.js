@@ -7,7 +7,6 @@ background-color:MistyRose;
 margin: 15px;
 border-radius:7px;
 padding: 15px;
-font-size: 1.55rem;
 font-family: BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 background: linear-gradient(90deg,#ff8a00,#e52e71);
 `;
